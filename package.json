@@ -8,5 +8,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Conviva Inc",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+github.com:Conviva/conviva-eco-js-tracker-core.git"
+  },
+  "keywords": [
+    "Conviva",
+    "Application",
+    "Eco"
+  ],
+  "bugs": {
+    "url": "https://github.com/Conviva/conviva-eco-js-tracker-core/issues"
+  },
+  "homepage": "https://github.com/Conviva/conviva-eco-js-tracker-core#readme"
 }
