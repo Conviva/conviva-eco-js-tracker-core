@@ -265,7 +265,6 @@ interface CoreConfiguration {
     linkClickTracking?: boolean;
     buttonClickTracking?: boolean;
     lifecycleAutotracking?: boolean;
-    customEvent?: boolean;
     exceptionAutotracking?: boolean;
     enablePeriodicHeartbeat?: boolean;
     periodicHeartbeatInterval?: number;
@@ -275,13 +274,15 @@ interface CoreConfiguration {
     maxGetBytes?: number;
     bufferSize?: number;
     customEventTrackingConfiguration?: any;
-    convivaVideoEventTrackingConfiguration?: any;
     ajaxTrackingConfiguration?: any;
     networkRequestTrackingConfiguration?: any;
     traceparentconfig?: any;
     metaTagsTrackingConfiguration?: any;
     performanceContextConfig?: number;
     mend?: boolean;
+    configurationVersion?: number;
+    catRcLastUpdatedTs?: number;
+    endpoint?: string;
 }
 /**
  * The configuration of the plugin to add
