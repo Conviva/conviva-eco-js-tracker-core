@@ -270,7 +270,6 @@ interface CoreConfiguration {
     periodicHeartbeatInterval?: number;
     enc?: string;
     maxLocalStorageQueueSize?: number;
-    maxPostBytes?: number;
     maxGetBytes?: number;
     bufferSize?: number;
     customEventTrackingConfiguration?: any;
@@ -283,6 +282,14 @@ interface CoreConfiguration {
     configurationVersion?: number;
     catRcLastUpdatedTs?: number;
     endpoint?: string;
+    emitterConfiguration?: {
+        batching?: {
+            enabled: boolean;
+            byteLimitPostInKB?: number;
+            batchingIntervalInSec?: number;
+            urgentEvents?: string[];
+        };
+    };
 }
 /**
  * The configuration of the plugin to add
