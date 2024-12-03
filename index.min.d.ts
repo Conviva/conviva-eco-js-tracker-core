@@ -282,6 +282,8 @@ interface CoreConfiguration {
     configurationVersion?: number;
     catRcLastUpdatedTs?: number;
     endpoint?: string;
+    controlIngestConfig?: any;
+    applicationContext?: boolean;
     emitterConfiguration?: {
         batching?: {
             enabled: boolean;
@@ -289,6 +291,10 @@ interface CoreConfiguration {
             batchingIntervalInSec?: number;
             urgentEvents?: string[];
         };
+    };
+    di?: {
+        en: boolean;
+        lim: number;
     };
 }
 /**
@@ -978,6 +984,14 @@ interface ApplicationForegroundEvent {
  */
 declare function buildApplicationForegroundEvent(event: ApplicationForegroundEvent): PayloadBuilder;
 /**
+ * Build a diagnostic info event
+ * Used for tracking diagnostic information
+ *
+ * @param event - Contains the properties for the Diagnostic info event
+ * @returns PayloadBuilder
+ */
+declare function buildDiagnosticInfoEvent(event: any): PayloadBuilder;
+/**
  * Type for a Payload dictionary
  */
 type Payload = Record<string, unknown>;
@@ -1269,4 +1283,4 @@ declare function matchSchemaAgainstRuleSet(ruleSet: RuleSet, schema: string): bo
  * @param schema - The schema to be matched against the rule
  */
 declare function matchSchemaAgainstRule(rule: string, schema: string): boolean;
-export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, AjaxEvent, buildStructEvent, buildCustomEvent, buildAjaxEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, EcommerceTransactionEvent, buildEcommerceTransaction, EcommerceTransactionItemEvent, buildEcommerceTransactionItem, ScreenViewEvent, buildScreenView, LinkClickEvent, ButtonClickEvent, buildLinkClick, buildButtonClick, AdImpressionEvent, buildAdImpression, AdClickEvent, buildAdClick, AdConversionEvent, buildAdConversion, SocialInteractionEvent, buildSocialInteraction, AddToCartEvent, buildAddToCart, RemoveFromCartEvent, buildRemoveFromCart, FormFocusOrChangeEvent, buildFormFocusOrChange, FormElement, FormSubmissionEvent, buildFormSubmission, SiteSearchEvent, buildSiteSearch, ConsentWithdrawnEvent, buildConsentWithdrawn, ConsentGrantedEvent, buildConsentGranted, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, LOG_LEVEL, Logger, LOG };
+export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, AjaxEvent, buildStructEvent, buildCustomEvent, buildAjaxEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, EcommerceTransactionEvent, buildEcommerceTransaction, EcommerceTransactionItemEvent, buildEcommerceTransactionItem, ScreenViewEvent, buildScreenView, LinkClickEvent, ButtonClickEvent, buildLinkClick, buildButtonClick, AdImpressionEvent, buildAdImpression, AdClickEvent, buildAdClick, AdConversionEvent, buildAdConversion, SocialInteractionEvent, buildSocialInteraction, AddToCartEvent, buildAddToCart, RemoveFromCartEvent, buildRemoveFromCart, FormFocusOrChangeEvent, buildFormFocusOrChange, FormElement, FormSubmissionEvent, buildFormSubmission, SiteSearchEvent, buildSiteSearch, ConsentWithdrawnEvent, buildConsentWithdrawn, ConsentGrantedEvent, buildConsentGranted, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, LOG_LEVEL, Logger, LOG };
