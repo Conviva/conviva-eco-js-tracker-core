@@ -1,7 +1,7 @@
 {
   "name": "@convivainc/tracker-core",
-  "version": "0.0.4",
-  "description": "Types file reference",
+  "version": "1.0.3",
+  "description": "Types file reference for Conviva ECO Tracker Core",
   "main": "index.min.d.ts",
   "types": "index.min.d.ts",
   "scripts": {

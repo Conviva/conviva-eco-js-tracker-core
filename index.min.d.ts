@@ -175,7 +175,7 @@ interface TrackerCore {
     /**
      * Set the platform
      *
-     * @param value - A valid Snowplow platform value
+     * @param value - A valid Conviva platform value
      */
     setPlatform(value: string): void;
     /**
@@ -273,7 +273,6 @@ interface CoreConfiguration {
     maxGetBytes?: number;
     bufferSize?: number;
     customEventTrackingConfiguration?: any;
-    ajaxTrackingConfiguration?: any;
     networkRequestTrackingConfiguration?: any;
     traceparentconfig?: any;
     metaTagsTrackingConfiguration?: any;
@@ -405,12 +404,12 @@ interface CustomEvent {
     data: any;
 }
 /**
- * A Ajax Event / network_request event
+ * A Network Request event
  * A classic style of event tracking, allows for easier movement between analytics
  * systems. A loosely typed event, creating a custom event is preferred, but
  * useful for interoperability.
  */
-interface AjaxEvent {
+interface NetworkRequestEvent {
     targetUrl: string;
     method?: string;
     contentType?: string;
@@ -449,16 +448,6 @@ declare function buildStructEvent(event: StructuredEvent): PayloadBuilder;
  */
 declare function buildCustomEvent(event: CustomEvent): PayloadBuilder;
 /**
- * Build a Custom Event
- * A classic style of event tracking, allows for easier movement between analytics
- * systems. A loosely typed event, creating a Custom event is preferred, but
- * useful for interoperability.
- *
- * @param event - Contains the properties for the Custom event
- * @returns PayloadBuilder
- */
-declare function buildAjaxEvent(event: AjaxEvent): PayloadBuilder;
-/**
  * Build a NetworkRequest Event
  * A classic style of event tracking, allows for easier movement between analytics
  * systems. A loosely typed event, creating a Custom event is preferred, but
@@ -467,7 +456,7 @@ declare function buildAjaxEvent(event: AjaxEvent): PayloadBuilder;
  * @param event - Contains the properties for the Custom event
  * @returns PayloadBuilder
  */
-declare function buildNetworkRequestEvent(event: AjaxEvent): PayloadBuilder;
+declare function buildNetworkRequestEvent(event: NetworkRequestEvent): PayloadBuilder;
 /**
  * Build a Conviva Video Event
  * A classic style of event tracking, allows for easier movement between analytics
@@ -478,92 +467,6 @@ declare function buildNetworkRequestEvent(event: AjaxEvent): PayloadBuilder;
  * @returns PayloadBuilder
  */
 declare function buildConvivaVideoEvent(event: any): PayloadBuilder;
-/**
- * An Ecommerce Transaction Event
- * Allows for tracking common ecommerce events, this event is usually used when
- * a customer completes a transaction.
- */
-interface EcommerceTransactionEvent {
-    /** An identifier for the order */
-    orderId: string;
-    /** The total value of the order  */
-    total: number;
-    /** Transaction affiliation (e.g. store where sale took place) */
-    affiliation?: string;
-    /** The amount of tax on the transaction */
-    tax?: number;
-    /** The amount of shipping costs for this transaction */
-    shipping?: number;
-    /** Delivery address, city */
-    city?: string;
-    /** Delivery address, state */
-    state?: string;
-    /** Delivery address, country */
-    country?: string;
-    /** Currency of the transaction */
-    currency?: string;
-}
-/**
- * Build an Ecommerce Transaction Event
- * Allows for tracking common ecommerce events, this event is usually used when
- * a consumer completes a transaction.
- *
- * @param event - Contains the properties for the Ecommerce Transactoion event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildEcommerceTransaction(event: EcommerceTransactionEvent): PayloadBuilder;
-/**
- * An Ecommerce Transaction Item
- * Related to the {@link EcommerceTransactionEvent}
- * Each Ecommerce Transaction may contain one or more EcommerceTransactionItem events
- */
-interface EcommerceTransactionItemEvent {
-    /** An identifier for the order */
-    orderId: string;
-    /** A Product Stock Keeping Unit (SKU) */
-    sku: string;
-    /** The price of the product */
-    price: number;
-    /** The name of the product */
-    name?: string;
-    /** The category the product belongs to */
-    category?: string;
-    /** The quanity of this product within the transaction */
-    quantity?: number;
-    /** The currency of the product for the transaction */
-    currency?: string;
-}
-/**
- * Build an Ecommerce Transaction Item Event
- * Related to the {@link buildEcommerceTransaction}
- * Each Ecommerce Transaction may contain one or more EcommerceTransactionItem events
- *
- * @param event - Contains the properties for the Ecommerce Transaction Item event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildEcommerceTransactionItem(event: EcommerceTransactionItemEvent): PayloadBuilder;
-/**
- * A Screen View Event
- * Similar to a Page View but less focused on typical web properties
- * Often used for mobile applications as the user is presented with
- * new views as they performance navigation events
- */
-interface ScreenViewEvent {
-    /** The name of the screen */
-    name?: string;
-    /** The identifier of the screen */
-    id?: string;
-}
-/**
- * Build a Scren View Event
- * Similar to a Page View but less focused on typical web properties
- * Often used for mobile applications as the user is presented with
- * new views as they performance navigation events
- *
- * @param event - Contains the properties for the Screen View event. One or more properties must be included.
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildScreenView(event: ScreenViewEvent): PayloadBuilder;
 /**
  * A Link Click Event
  * Used when a user clicks on a link on a webpage, typically an anchor tag <a>
@@ -615,343 +518,6 @@ declare function buildLinkClick(event: LinkClickEvent): PayloadBuilder;
  */
 declare function buildButtonClick(event: ButtonClickEvent): PayloadBuilder;
 /**
- * An Ad Impression Event
- * Used to track an advertisement impression
- *
- * @remarks
- * If you provide the cost field, you must also provide one of 'cpa', 'cpc', and 'cpm' for the costModel field.
- */
-interface AdImpressionEvent {
-    /** Identifier for the particular impression instance */
-    impressionId?: string;
-    /** The cost model for the campaign */
-    costModel?: "cpa" | "cpc" | "cpm";
-    /** Advertisement cost */
-    cost?: number;
-    /** The destination URL of the advertisement */
-    targetUrl?: string;
-    /** Identifier for the ad banner being displayed */
-    bannerId?: string;
-    /** Identifier for the zone where the ad banner is located */
-    zoneId?: string;
-    /** Identifier for the advertiser which the campaign belongs to */
-    advertiserId?: string;
-    /** Identifier for the advertiser which the campaign belongs to */
-    campaignId?: string;
-}
-/**
- * Build a Ad Impression Event
- * Used to track an advertisement impression
- *
- * @remarks
- * If you provide the cost field, you must also provide one of 'cpa', 'cpc', and 'cpm' for the costModel field.
- *
- * @param event - Contains the properties for the Ad Impression event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildAdImpression(event: AdImpressionEvent): PayloadBuilder;
-/**
- * An Ad Click Event
- * Used to track an advertisement click
- *
- * @remarks
- * If you provide the cost field, you must also provide one of 'cpa', 'cpc', and 'cpm' for the costModel field.
- */
-interface AdClickEvent {
-    /** The destination URL of the advertisement */
-    targetUrl: string;
-    /**	Identifier for the particular click instance */
-    clickId?: string;
-    /** The cost model for the campaign */
-    costModel?: "cpa" | "cpc" | "cpm";
-    /** Advertisement cost */
-    cost?: number;
-    /** Identifier for the ad banner being displayed */
-    bannerId?: string;
-    /** Identifier for the zone where the ad banner is located */
-    zoneId?: string;
-    /** Identifier for the particular impression instance */
-    impressionId?: string;
-    /** Identifier for the advertiser which the campaign belongs to */
-    advertiserId?: string;
-    /** Identifier for the advertiser which the campaign belongs to */
-    campaignId?: string;
-}
-/**
- * Build a Ad Click Event
- * Used to track an advertisement click
- *
- * @remarks
- * If you provide the cost field, you must also provide one of 'cpa', 'cpc', and 'cpm' for the costModel field.
- *
- * @param event - Contains the properties for the Ad Click event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildAdClick(event: AdClickEvent): PayloadBuilder;
-/**
- * An Ad Conversion Event
- * Used to track an advertisement click
- *
- * @remarks
- * If you provide the cost field, you must also provide one of 'cpa', 'cpc', and 'cpm' for the costModel field.
- */
-interface AdConversionEvent {
-    /** Identifier for the particular conversion instance */
-    conversionId?: string;
-    /** The cost model for the campaign */
-    costModel?: "cpa" | "cpc" | "cpm";
-    /** Advertisement cost */
-    cost?: number;
-    /**	Conversion category */
-    category?: string;
-    /** The type of user interaction e.g. 'purchase' */
-    action?: string;
-    /** Describes the object of the conversion */
-    property?: string;
-    /** How much the conversion is initially worth */
-    initialValue?: number;
-    /** Identifier for the advertiser which the campaign belongs to */
-    advertiserId?: string;
-    /** Identifier for the advertiser which the campaign belongs to */
-    campaignId?: string;
-}
-/**
- * Build a Ad Conversion Event
- * Used to track an advertisement click
- *
- * @remarks
- * If you provide the cost field, you must also provide one of 'cpa', 'cpc', and 'cpm' for the costModel field.
- *
- * @param event - Contains the properties for the Ad Conversion event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildAdConversion(event: AdConversionEvent): PayloadBuilder;
-/**
- * A Social Interaction Event
- * Social tracking will be used to track the way users interact
- * with Facebook, Twitter and Google + widgets
- * e.g. to capture “like this” or “tweet this” events.
- */
-interface SocialInteractionEvent {
-    /** Social action performed */
-    action: string;
-    /** Social network */
-    network: string;
-    /** Object social action is performed on */
-    target?: string;
-}
-/**
- * Build a Social Interaction Event
- * Social tracking will be used to track the way users interact
- * with Facebook, Twitter and Google + widgets
- * e.g. to capture “like this” or “tweet this” events.
- *
- * @param event - Contains the properties for the Social Interaction event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildSocialInteraction(event: SocialInteractionEvent): PayloadBuilder;
-/**
- * An Add To Cart Event
- * For tracking users adding items from a cart
- * on an ecommerce site.
- */
-interface AddToCartEvent {
-    /** A Product Stock Keeping Unit (SKU) */
-    sku: string;
-    /** The number added to the cart */
-    quantity: number;
-    /** The name of the product */
-    name?: string;
-    /** The category of the product */
-    category?: string;
-    /** The price of the product */
-    unitPrice?: number;
-    /** The currency of the product */
-    currency?: string;
-}
-/**
- * Build a Add To Cart Event
- * For tracking users adding items from a cart
- * on an ecommerce site.
- *
- * @param event - Contains the properties for the Add To Cart event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildAddToCart(event: AddToCartEvent): PayloadBuilder;
-/**
- * An Remove To Cart Event
- * For tracking users removing items from a cart
- * on an ecommerce site.
- */
-interface RemoveFromCartEvent {
-    /** A Product Stock Keeping Unit (SKU) */
-    sku: string;
-    /** The number removed from the cart */
-    quantity: number;
-    /** The name of the product */
-    name?: string;
-    /** The category of the product */
-    category?: string;
-    /** The price of the product */
-    unitPrice?: number;
-    /** The currency of the product */
-    currency?: string;
-}
-/**
- * Build a Remove From Cart Event
- * For tracking users removing items from a cart
- * on an ecommerce site.
- *
- * @param event - Contains the properties for the Remove From Cart event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildRemoveFromCart(event: RemoveFromCartEvent): PayloadBuilder;
-/**
- * Represents either a Form Focus or Form Change event
- * When a user focuses on a form element or when a user makes a
- * change to a form element.
- */
-interface FormFocusOrChangeEvent {
-    /** The schema which will be used for the event */
-    schema: "change_form" | "focus_form";
-    /** The ID of the form which the element belongs to */
-    formId: string;
-    /** The element ID which the user is interacting with */
-    elementId: string;
-    /** The name of the node ("INPUT", "TEXTAREA", "SELECT") */
-    nodeName: string;
-    /** The value of the element at the time of the event firing */
-    value: string | null;
-    /** The type of element (e.g. "datetime", "text", "radio", etc.) */
-    type?: string | null;
-    /** The class names on the element */
-    elementClasses?: Array<string> | null;
-}
-/**
- * Build a Form Focus or Change Form Event based on schema property
- * When a user focuses on a form element or when a user makes a
- * change to a form element.
- *
- * @param event - Contains the properties for the Form Focus or Change Form event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildFormFocusOrChange(event: FormFocusOrChangeEvent): PayloadBuilder;
-/**
- * A representation of an element within a form
- */
-type FormElement = {
-    /** The name of the element */
-    name: string;
-    /** The current value of the element */
-    value: string | null;
-    /** The name of the node ("INPUT", "TEXTAREA", "SELECT") */
-    nodeName: string;
-    /** The type of element (e.g. "datetime", "text", "radio", etc.) */
-    type?: string | null;
-};
-/**
- * A Form Submission Event
- * Used to track when a user submits a form
- */
-interface FormSubmissionEvent {
-    /** The ID of the form */
-    formId: string;
-    /** The class names on the form */
-    formClasses?: Array<string>;
-    /** The elements contained within the form */
-    elements?: Array<FormElement>;
-}
-/**
- * Build a Form Submission Event
- * Used to track when a user submits a form
- *
- * @param event - Contains the properties for the Form Submission event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildFormSubmission(event: FormSubmissionEvent): PayloadBuilder;
-/**
- * A Site Search Event
- * Used when a user performs a search action on a page
- */
-interface SiteSearchEvent {
-    /** The terms of the search */
-    terms: Array<string>;
-    /** Any filters which have been applied to the search */
-    filters?: Record<string, string | boolean>;
-    /** The total number of results for this search */
-    totalResults?: number;
-    /** The number of visible results on the page */
-    pageResults?: number;
-}
-/**
- * Build a Site Search Event
- * Used when a user performs a search action on a page
- *
- * @param event - Contains the properties for the Site Search event
- * @returns PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track}
- */
-declare function buildSiteSearch(event: SiteSearchEvent): PayloadBuilder;
-/**
- * A Consent Withdrawn Event
- * Used for tracking when a user withdraws their consent
- */
-interface ConsentWithdrawnEvent {
-    /** Specifies whether all consent should be withdrawn */
-    all: boolean;
-    /** Identifier for the document withdrawing consent */
-    id?: string;
-    /** Version of the document withdrawing consent */
-    version?: string;
-    /** Name of the document withdrawing consent */
-    name?: string;
-    /** Description of the document withdrawing consent */
-    description?: string;
-}
-/**
- * Build a Consent Withdrawn Event
- * Used for tracking when a user withdraws their consent
- *
- * @param event - Contains the properties for the Consent Withdrawn event
- * @returns An object containing the PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track} and a 'consent_document' context
- */
-declare function buildConsentWithdrawn(event: ConsentWithdrawnEvent): {
-    event: PayloadBuilder;
-    context: {
-        sc: string;
-        dt: Record<string, unknown>;
-    }[];
-};
-/**
- * A Consent Granted Event
- * Used for tracking when a user grants their consent
- */
-interface ConsentGrantedEvent {
-    /** Identifier for the document granting consent */
-    id: string;
-    /** Version of the document granting consent */
-    version: string;
-    /** Name of the document granting consent */
-    name?: string;
-    /** Description of the document granting consent */
-    description?: string;
-    /** When the consent expires */
-    expiry?: string;
-}
-/**
- * Build a Consent Granted Event
- * Used for tracking when a user grants their consent
- *
- * @param event - Contains the properties for the Consent Granted event
- * @returns An object containing the PayloadBuilder to be sent to {@link @convivainc/tracker-core#TrackerCore.track} and a 'consent_document' context
- */
-declare function buildConsentGranted(event: ConsentGrantedEvent): {
-    event: PayloadBuilder;
-    context: {
-        sc: string;
-        dt: Record<string, unknown>;
-    }[];
-};
-/**
  * An Application Background Event
  * For tracking visibility change to hidden.
  */
@@ -991,6 +557,14 @@ declare function buildApplicationForegroundEvent(event: ApplicationForegroundEve
  * @returns PayloadBuilder
  */
 declare function buildDiagnosticInfoEvent(event: any): PayloadBuilder;
+/**
+ * Returns a copy of a JSON with undefined and null properties removed
+ *
+ * @param event - JSON object to clean
+ * @param exemptFields - Set of fields which should not be removed even if empty
+ * @returns A cleaned copy of eventJson
+ */
+declare function removeEmptyProperties(event: Record<string, unknown>, exemptFields?: Record<string, boolean>): Record<string, unknown>;
 /**
  * Type for a Payload dictionary
  */
@@ -1060,7 +634,7 @@ interface PayloadBuilder {
 }
 declare function payloadBuilder(): PayloadBuilder;
 /**
- * A helper to build a Snowplow request from a set of name-value pairs, provided using the add methods.
+ * A helper to build a Conviva request from a set of name-value pairs, provided using the add methods.
  * Will base64 encode JSON, if desired, on build
  *
  * @returns The request builder, with add and build methods
@@ -1283,4 +857,4 @@ declare function matchSchemaAgainstRuleSet(ruleSet: RuleSet, schema: string): bo
  * @param schema - The schema to be matched against the rule
  */
 declare function matchSchemaAgainstRule(rule: string, schema: string): boolean;
-export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, AjaxEvent, buildStructEvent, buildCustomEvent, buildAjaxEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, EcommerceTransactionEvent, buildEcommerceTransaction, EcommerceTransactionItemEvent, buildEcommerceTransactionItem, ScreenViewEvent, buildScreenView, LinkClickEvent, ButtonClickEvent, buildLinkClick, buildButtonClick, AdImpressionEvent, buildAdImpression, AdClickEvent, buildAdClick, AdConversionEvent, buildAdConversion, SocialInteractionEvent, buildSocialInteraction, AddToCartEvent, buildAddToCart, RemoveFromCartEvent, buildRemoveFromCart, FormFocusOrChangeEvent, buildFormFocusOrChange, FormElement, FormSubmissionEvent, buildFormSubmission, SiteSearchEvent, buildSiteSearch, ConsentWithdrawnEvent, buildConsentWithdrawn, ConsentGrantedEvent, buildConsentGranted, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, LOG_LEVEL, Logger, LOG };
+export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, NetworkRequestEvent, buildStructEvent, buildCustomEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, LinkClickEvent, ButtonClickEvent, buildLinkClick, buildButtonClick, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, removeEmptyProperties, LOG_LEVEL, Logger, LOG };
