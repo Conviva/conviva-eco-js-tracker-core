@@ -2,8 +2,8 @@
   "name": "@convivainc/tracker-core",
   "version": "1.1.1",
   "description": "Types file reference for Conviva ECO Tracker Core",
-  "main": "index.module.d.ts",
-  "types": "index.module.d.ts",
+  "main": "index.min.d.ts",
+  "types": "index.min.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
