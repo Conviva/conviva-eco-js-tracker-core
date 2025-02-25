@@ -262,8 +262,6 @@ interface CoreConfiguration {
     /* The callback which will fire each time `track()` is called */
     callback?: (PayloadData: PayloadBuilder) => void;
     /* Conviva specific configuration read from remote server */
-    linkClickTracking?: boolean;
-    buttonClickTracking?: boolean;
     lifecycleAutotracking?: boolean;
     exceptionAutotracking?: boolean;
     enablePeriodicHeartbeat?: boolean;
@@ -294,6 +292,13 @@ interface CoreConfiguration {
     di?: {
         en: boolean;
         lim: number;
+    };
+    clickcc?: {
+        en: boolean;
+        cssSelectorList?: string;
+        uiMode?: string;
+        block?: any;
+        collect?: any;
     };
 }
 /**
@@ -500,6 +505,30 @@ interface ButtonClickEvent {
     elementText?: string;
     /** The value attribute of button / input tag */
     elementValue?: string;
+}
+/**
+ * A Click Event
+ * Used when a user clicks on a clickable element on a webpage, typically like button or input tag
+ */
+interface clickElementEvent {
+    /** The type of button example: button, submit, radio or reset */
+    elementtType?: string | null;
+    /** The tag name of the element clicked if present */
+    elementName?: string;
+    /** The ID of the element clicked if present */
+    id?: string;
+    /** An stirng of class names from the element clicked */
+    class?: string;
+    /** The name set for the button */
+    name?: string | null;
+    /** Text written on top of button, usually from innerHTML of button / input tag */
+    text?: string;
+    /** The placeholder attribute of input tag */
+    placeholder?: string;
+    /** The value attribute of button / input tag */
+    value?: string;
+    /** The custom attribute of clicked element */
+    [key: string]: string | undefined | null;
 }
 /**
  * Build a Link Click Event
@@ -857,4 +886,4 @@ declare function matchSchemaAgainstRuleSet(ruleSet: RuleSet, schema: string): bo
  * @param schema - The schema to be matched against the rule
  */
 declare function matchSchemaAgainstRule(rule: string, schema: string): boolean;
-export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, NetworkRequestEvent, buildStructEvent, buildCustomEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, LinkClickEvent, ButtonClickEvent, buildLinkClick, buildButtonClick, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, removeEmptyProperties, LOG_LEVEL, Logger, LOG };
+export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, NetworkRequestEvent, buildStructEvent, buildCustomEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, LinkClickEvent, ButtonClickEvent, clickElementEvent, buildLinkClick, buildButtonClick, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, removeEmptyProperties, LOG_LEVEL, Logger, LOG };
