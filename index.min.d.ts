@@ -309,6 +309,13 @@ interface CorePluginConfiguration {
     plugin: CorePlugin;
 }
 /**
+ * SetCustomTags event object
+ */
+interface CustomTags {
+    [key: string]: any;
+    length?: never;
+}
+/**
  * Create a tracker core object
  *
  * @param base64 - Whether to base 64 encode contexts and self describing event JSONs
@@ -886,4 +893,46 @@ declare function matchSchemaAgainstRuleSet(ruleSet: RuleSet, schema: string): bo
  * @param schema - The schema to be matched against the rule
  */
 declare function matchSchemaAgainstRule(rule: string, schema: string): boolean;
-export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, NetworkRequestEvent, buildStructEvent, buildCustomEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, LinkClickEvent, ButtonClickEvent, clickElementEvent, buildLinkClick, buildButtonClick, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, removeEmptyProperties, LOG_LEVEL, Logger, LOG };
+/**
+ * Decodes a url safe Base 64 encoded string
+ * @remarks See: {@link http://tools.ietf.org/html/rfc4648#page-7}
+ * @param data - String to decode
+ * @returns The decoded string
+ */
+declare function base64urldecode(data: string): string;
+/**
+ * Encodes a string into a url safe Base 64 encoded string
+ * @remarks See: {@link http://tools.ietf.org/html/rfc4648#page-7}
+ * @param data - String to encode
+ * @returns The url safe Base 64 string
+ */
+declare function base64urlencode(data: string): string;
+/**
+ * Encode string as base64.
+ * Any type can be passed, but will be stringified
+ *
+ * @param data - string to encode
+ * @returns base64-encoded string
+ */
+declare function base64encode(data: string): string;
+/**
+ * Decode base64 to string
+ *
+ * @param data - base64 to string
+ * @returns decoded string
+ */
+declare function base64decode(encodedData: string): string;
+/**
+ * Base64 encoding
+ * Only stringified object can be passed
+ * @param inputString
+ * @returns
+ */
+declare function base64Encoding(inputString: string): string;
+/**
+ * Decode Base64 data to string
+ * @param encodedData
+ * @returns
+ */
+declare function base64Decoding(encodedData: string): string;
+export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, CustomTags, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, NetworkRequestEvent, buildStructEvent, buildCustomEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, LinkClickEvent, ButtonClickEvent, clickElementEvent, buildLinkClick, buildButtonClick, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, removeEmptyProperties, LOG_LEVEL, Logger, LOG, base64urldecode, base64urlencode, base64encode, base64decode, base64Encoding, base64Decoding };
