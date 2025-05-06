@@ -300,6 +300,13 @@ interface CoreConfiguration {
         block?: any;
         collect?: any;
     };
+    collectionRateLimit?: {
+        exceptionAutotracking?: {
+            maxEvents: number;
+            timeWindow: number;
+            disconnectDuration: number;
+        };
+    };
 }
 /**
  * The configuration of the plugin to add
