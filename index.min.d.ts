@@ -299,6 +299,7 @@ interface CoreConfiguration {
         uiMode?: string;
         block?: any;
         collect?: any;
+        collectattr?: Array<string>;
     };
     collectionRateLimit?: {
         exceptionAutotracking?: {
