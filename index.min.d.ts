@@ -50,7 +50,8 @@ declare enum nwSchemaAttr {
     response_body = "rsb",
     request_body = "rqb",
     response_headers = "rsh",
-    request_headers = "rqh"
+    request_headers = "rqh",
+    request_query = "rqq"
 }
 /**
  * export interface for any Self-Describing JSON such as context or Self Describing events
@@ -308,6 +309,7 @@ interface CoreConfiguration {
             disconnectDuration: number;
         };
     };
+    pageUrlTrackingConfig?: any;
 }
 /**
  * The configuration of the plugin to add
@@ -440,6 +442,7 @@ interface NetworkRequestEvent {
     [nwSchemaAttr.response_body]?: any;
     [nwSchemaAttr.request_headers]?: any;
     [nwSchemaAttr.response_headers]?: any;
+    [nwSchemaAttr.request_query]?: any;
     requestTimestamp?: number;
     responseTimestamp?: number;
     webResourceTiming?: any;
