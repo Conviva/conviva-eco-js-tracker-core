@@ -275,6 +275,7 @@ interface CoreConfiguration {
     networkRequestTrackingConfiguration?: any;
     traceparentconfig?: any;
     metaTagsTrackingConfiguration?: any;
+    evtStreamTrackingConfiguration?: any;
     performanceContextConfig?: number;
     mend?: boolean;
     configurationVersion?: number;
