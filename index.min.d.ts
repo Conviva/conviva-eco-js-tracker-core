@@ -311,6 +311,7 @@ interface CoreConfiguration {
         };
     };
     pageUrlTrackingConfig?: any;
+    sessionReplayConfiguration?: any;
 }
 /**
  * The configuration of the plugin to add
