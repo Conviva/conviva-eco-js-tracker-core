@@ -250,6 +250,8 @@ interface TrackerCore {
     addPlugin(configuration: CorePluginConfiguration): void;
     getConfig(): CoreConfiguration;
     setConfig(config: CoreConfiguration): void;
+    setConversationId(conversationId: string): void;
+    getConversationId(): string | null;
 }
 /**
  * The configuration object for the tracker core library
@@ -274,6 +276,7 @@ interface CoreConfiguration {
     customEventTrackingConfiguration?: any;
     networkRequestTrackingConfiguration?: any;
     traceparentconfig?: any;
+    baggageConfiguration?: any;
     metaTagsTrackingConfiguration?: any;
     evtStreamTrackingConfiguration?: any;
     performanceContextConfig?: number;
