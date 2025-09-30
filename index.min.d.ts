@@ -274,6 +274,7 @@ interface CoreConfiguration {
     maxGetBytes?: number;
     bufferSize?: number;
     customEventTrackingConfiguration?: any;
+    softNavigationTrackingConfiguration?: any;
     networkRequestTrackingConfiguration?: any;
     traceparentconfig?: any;
     baggageConfiguration?: any;
