@@ -317,6 +317,7 @@ interface CoreConfiguration {
     pageUrlTrackingConfig?: any;
     sessionReplayConfiguration?: any;
     valueProbes?: any;
+    webVitals?: any;
 }
 /**
  * The configuration of the plugin to add
