@@ -252,6 +252,12 @@ interface TrackerCore {
     setConfig(config: CoreConfiguration): void;
     setConversationId(conversationId: string): void;
     getConversationId(): string | null;
+    /**
+     * Set the RCV from response header
+     *
+     * @param rcv - An rcv Value From Header response
+     */
+    setRCV(rcv: string): void;
 }
 /**
  * The configuration object for the tracker core library
@@ -282,7 +288,6 @@ interface CoreConfiguration {
     evtStreamTrackingConfiguration?: any;
     performanceContextConfig?: number;
     mend?: boolean;
-    configurationVersion?: number;
     catRcLastUpdatedTs?: number;
     endpoint?: string;
     controlIngestConfig?: any;
@@ -316,6 +321,7 @@ interface CoreConfiguration {
     };
     pageUrlTrackingConfig?: any;
     sessionReplayConfiguration?: any;
+    rcv?: string;
     valueProbes?: any;
     webVitals?: any;
 }
