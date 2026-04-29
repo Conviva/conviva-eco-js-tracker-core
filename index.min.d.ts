@@ -318,12 +318,23 @@ interface CoreConfiguration {
             timeWindow: number;
             disconnectDuration: number;
         };
+        formValidation?: {
+            maxEvents: number;
+            timeWindow: number;
+            disconnectDuration: number;
+        };
     };
     pageUrlTrackingConfig?: any;
     sessionReplayConfiguration?: any;
     rcv?: string;
     valueProbes?: any;
     webVitals?: any;
+    scrollsCollection?: {
+        enabled: boolean;
+        milestones?: number[];
+    };
+    formcc?: any;
+    ipv4ipv6collection?: any;
 }
 /**
  * The configuration of the plugin to add
