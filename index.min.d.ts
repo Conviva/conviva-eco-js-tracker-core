@@ -570,6 +570,8 @@ interface clickElementEvent {
     placeholder?: string;
     /** The value attribute of button / input tag */
     value?: string;
+    /** The checked state ("true"/"false") of an <input type="checkbox"> at click time */
+    checked?: string;
     /** The custom attribute of clicked element */
     [key: string]: string | undefined | null;
 }
