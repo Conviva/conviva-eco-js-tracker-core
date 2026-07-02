@@ -252,6 +252,8 @@ interface TrackerCore {
     setConfig(config: CoreConfiguration): void;
     setConversationId(conversationId: string): void;
     getConversationId(): string | null;
+    setMessageId(messageId: string): void;
+    getMessageId(): string | null;
     /**
      * Set the RCV from response header
      *
@@ -572,6 +574,11 @@ interface clickElementEvent {
     value?: string;
     /** The checked state ("true"/"false") of an <input type="checkbox"> at click time */
     checked?: string;
+    /**
+     * XPath of the clicked element. Recommended for custom-tracker integrators —
+     * provides a stable element locator that survives DOM restructuring.
+     */
+    xpath?: string;
     /** The custom attribute of clicked element */
     [key: string]: string | undefined | null;
 }
