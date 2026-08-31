@@ -313,6 +313,10 @@ interface CoreConfiguration {
         block?: any;
         collect?: any;
         collectattr?: Array<string>;
+        ancestor?: {
+            attrs?: Array<string>;
+            maxDepth?: number;
+        };
     };
     collectionRateLimit?: {
         exceptionAutotracking?: {
@@ -555,6 +559,15 @@ interface ButtonClickEvent {
  * A Click Event
  * Used when a user clicks on a clickable element on a webpage, typically like button or input tag
  */
+/**
+ * Configured attribute names resolved from the clicked element's ancestors,
+ * mapped to their (truncated) values. Each attribute appears at most once —
+ * the nearest ancestor carrying it wins — so identifiers that live on a wrapper
+ * rather than the clicked leaf are preserved in a flat, single-level shape.
+ */
+interface ClickAncestorAttributes {
+    [key: string]: string;
+}
 interface clickElementEvent {
     /** The type of button example: button, submit, radio or reset */
     elementtType?: string | null;
@@ -579,8 +592,14 @@ interface clickElementEvent {
      * provides a stable element locator that survives DOM restructuring.
      */
     xpath?: string;
+    /**
+     * Configured attributes resolved from the clicked element's ancestors, nearest
+     * ancestor winning per attribute. Present only when `clickcc.ancestor.attrs`
+     * is a non-empty array and at least one configured attribute was found.
+     */
+    ancestorattr?: ClickAncestorAttributes;
     /** The custom attribute of clicked element */
-    [key: string]: string | undefined | null;
+    [key: string]: string | undefined | null | ClickAncestorAttributes;
 }
 /**
  * Build a Link Click Event
@@ -980,4 +999,4 @@ declare function base64Encoding(inputString: string): string;
  * @returns
  */
 declare function base64Decoding(encodedData: string): string;
-export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, CustomTags, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, NetworkRequestEvent, buildStructEvent, buildCustomEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, LinkClickEvent, ButtonClickEvent, clickElementEvent, buildLinkClick, buildButtonClick, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, removeEmptyProperties, LOG_LEVEL, Logger, LOG, base64urldecode, base64urlencode, base64encode, base64decode, base64Encoding, base64Decoding };
+export { version, ContextEvent, ContextGenerator, ContextFilter, ContextPrimitive, FilterProvider, RuleSet, RuleSetProvider, ConditionalContextProvider, DynamicContext, GlobalContexts, globalContexts, PluginContexts, pluginContexts, resolveDynamicContext, getSchemaParts, validateVendorParts, validateVendor, getRuleParts, isValidRule, isStringArray, isValidRuleSetArg, isSelfDescribingJson, isRuleSet, isContextCallbackFunction, isContextPrimitive, isFilterProvider, isRuleSetProvider, isConditionalContextProvider, matchSchemaAgainstRuleSet, matchSchemaAgainstRule, CorePlugin, Payload, EventJsonWithKeys, EventJson, JsonProcessor, PayloadBuilder, payloadBuilder, payloadJsonProcessor, isNonEmptyJson, isJson, SelfDescribingJson, SelfDescribingJsonArray, Timestamp, TrueTimestamp, DeviceTimestamp, CommonEventProperties, TrackerCore, CoreConfiguration, CorePluginConfiguration, CustomTags, trackerCore, SelfDescribingEvent, buildSelfDescribingEvent, PageViewEvent, buildPageView, PagePingEvent, buildPagePing, StructuredEvent, CustomEvent, NetworkRequestEvent, buildStructEvent, buildCustomEvent, buildNetworkRequestEvent, buildConvivaVideoEvent, LinkClickEvent, ButtonClickEvent, ClickAncestorAttributes, clickElementEvent, buildLinkClick, buildButtonClick, ApplicationBackgroundEvent, buildApplicationBackgroundEvent, ApplicationForegroundEvent, buildApplicationForegroundEvent, buildDiagnosticInfoEvent, removeEmptyProperties, LOG_LEVEL, Logger, LOG, base64urldecode, base64urlencode, base64encode, base64decode, base64Encoding, base64Decoding };
